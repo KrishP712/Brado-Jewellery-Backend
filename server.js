@@ -14,7 +14,7 @@ app.use(cors({
   origin: ["http://localhost:5173","https://brado-jewellery-web.vercel.app", "http://localhost:5174", "http://localhost:5175"],
   credentials: true
 }));
-
+  
 
 app.use(cookieParser());
 app.use('/uploads', express.static('uploads'));
