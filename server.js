@@ -18,9 +18,13 @@ app.use(cors({
 
 app.use(cookieParser());
 app.use('/uploads', express.static('uploads'));
-app.listen(port, () => {
-  console.log(`Server is running on port ${port}`);
-})
 
 app.use('/admin', router)
 app.use('/auth', router)
+
+app.get('/', (req, res) => {
+  res.send('Hii , Krish Server and API is running....')
+})
+app.listen(port, () => {
+  console.log(`Server is running on port ${port}`);
+})
