@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Brad Jewellery - OTP Verification</title>
+
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #f6f2ec;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            width: 100%;
+            padding: 30px 0;
+            display: flex;
+            justify-content: center;
+        }
+
+        .card {
+            width: 420px;
+            background: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+            overflow: hidden;
+        }
+
+        .header {
+            background: #c8a46a;
+            padding: 22px;
+            text-align: center;
+            color: white;
+            font-size: 24px;
+            letter-spacing: 1px;
+            font-weight: 600;
+        }
+
+        .body {
+            padding: 25px 30px;
+            text-align: center;
+        }
+
+        .otp-box {
+            background: #f3e6d2;
+            padding: 14px;
+            margin: 20px auto;
+            width: 180px;
+            border-radius: 8px;
+            font-size: 28px;
+            font-weight: 700;
+            letter-spacing: 5px;
+            color: #352e23;
+        }
+
+        .text {
+            font-size: 15px;
+            color: #4a4336;
+            line-height: 23px;
+        }
+
+        .footer {
+            padding: 22px;
+            text-align: center;
+            font-size: 13px;
+            color: #7c7363;
+        }
+
+        .brand {
+            font-weight: 700;
+            color: #c8a46a;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+    <div class="card">
+
+        <div class="header">Brad Jewellery</div>
+
+        <div class="body">
+            <p class="text">Dear Customer,</p>
+
+            <p class="text">
+                Thank you for choosing <span class="brand">Brad Jewellery</span>.<br>
+                Use the OTP below to verify your login:
+            </p>
+
+            <div class="otp-box">
+                <%= otp %>
+            </div>
+
+            <p class="text">
+                This OTP is valid for <b>2 minutes</b>.<br>
+                Do not share it with anyone.
+            </p>
+        </div>
+
+        <div class="footer">
+            © <%= year %> Brad Jewellery. All Rights Reserved.
+        </div>
+
+    </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,10 @@
+const router = require("express").Router()
+const { createAddress, getAllAddress, getByIdAddress, updateAddress, deleteAddress, setDefaultAddress } = require("../controllers/Address.controller")
+const authUser = require("../middleware/authAuthorization")
+router.post("/create", authUser, createAddress)
+router.get("/all", authUser, getAllAddress)
+router.get("/all/:addressId", authUser, getByIdAddress)
+router.put("/update/:addressId", authUser, updateAddress)
+router.delete("/delete/:addressId", authUser, deleteAddress)
+router.put("/default/:addressId", authUser, setDefaultAddress)
+module.exports = router
