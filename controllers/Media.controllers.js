@@ -12,7 +12,7 @@ const createMedia = async (req, res) => {
 
     const mediaDocs = req.files.map(file => ({
       type,
-      media: `http://localhost:4000/uploads/${file.filename}`,
+      media: `https://brado-jewellery-backend-2gq8.onrender.com/uploads${file.filename}`,
       size: file.size,
     }));
 
