@@ -17,6 +17,7 @@ const createMedia = async (req, res) => {
     }));
 
     const mediaData = await Media.create(mediaDocs);
+    console.log(mediaData)
 
     res.status(201).json({ success: true, message: "Media created successfully!", mediaData });
   } catch (error) {
