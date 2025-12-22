@@ -115,7 +115,7 @@ const logout = async (req, res) => {
         if (!usertoken) {
             return res.status(401).json({ success: false, message: "Authorization token is required!" });
         }
-        res.clearCookie("usertoken");
+        
         return res.status(200).json({ success: true, message: "User logged out successfully" });
     } catch (error) {
         return res.status(500).json({ success: false, message: error.message });
