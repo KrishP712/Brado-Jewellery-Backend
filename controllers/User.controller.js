@@ -73,7 +73,7 @@ const verifyOtp = async (req, res) => {
                 maxAge: 24 * 60 * 60 * 1000,
                 httpOnly: false,
                 secure: true,
-                sameSite: "strict",
+                sameSite: "none",
             })
             .status(200)
             .json({ success: true, message: "User login Successfully" });
