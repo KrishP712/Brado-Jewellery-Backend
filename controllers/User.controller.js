@@ -1,7 +1,7 @@
 const User = require("../model/user");
 const jwt = require('jsonwebtoken')
 const ObjectId = require('mongodb').ObjectId;
-const {sendOtpEmail} = require("../utils/mailsender");
+const { sendOtpEmail } = require("../utils/mailsender");
 
 const userLogin = async (req, res) => {
     try {
@@ -68,15 +68,7 @@ const verifyOtp = async (req, res) => {
             { expiresIn: "1d" },
         );
 
-        return res
-            .cookie("usertoken", token, {
-                maxAge: 24 * 60 * 60 * 1000,
-                httpOnly: true,
-                secure: true,
-                sameSite: "none",
-            })
-            .status(200)
-            .json({ success: true, message: "User login Successfully" });
+        return res.status(200).json({ success: true, message: "User login Successfully", token });
     } catch (error) {
         console.error("verifyOtp error:", error);
         return res.status(500).json({ success: false, message: error.message });
