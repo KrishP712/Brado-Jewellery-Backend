@@ -75,6 +75,9 @@ const getAllCart = async (req, res) => {
     const { couponcode } = req.query;
     const cart = await Cart.aggregate([
       {
+        $match: req.user
+      },
+      {
         $unwind: "$products"
       },
       {
@@ -84,7 +87,6 @@ const getAllCart = async (req, res) => {
           foreignField: "_id",
           as: "productDetails",
           pipeline: [
-            // --- Get product image ---
             {
               $lookup: {
                 from: "media",
@@ -155,7 +157,6 @@ const getAllCart = async (req, res) => {
       },
       { $unwind: "$productDetails" },
 
-      // --- Add quantity and basic fields ---
       {
         $addFields: {
           "productDetails.quantity": "$products.quantity",
@@ -163,7 +164,7 @@ const getAllCart = async (req, res) => {
         }
       },
 
-      // --- Base Price Calculations ---
+
       {
         $addFields: {
           "productDetails.itemMRP": {
