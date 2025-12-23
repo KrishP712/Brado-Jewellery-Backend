@@ -73,7 +73,7 @@ const createCart = async (req, res) => {
 const getAllCart = async (req, res) => {
   try {
     const { couponcode } = req.query;
-    const userId = req.user._id;
+    const userId = req.userId;
     const cart = await Cart.aggregate([
       {
         $match: { userId: userId }
