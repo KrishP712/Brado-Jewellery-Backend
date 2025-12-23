@@ -9,7 +9,6 @@ const createCart = async (req, res) => {
   try {
     const userId = req.user._id;
     const { productId, quantity = 1 } = req.body;
-    console.log(userId, productId, quantity);
 
     if (!productId) {
       return res.status(400).json({ success: false, error: "Product is required" });
