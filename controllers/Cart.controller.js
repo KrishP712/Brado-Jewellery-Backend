@@ -74,6 +74,7 @@ const getAllCart = async (req, res) => {
   try {
     const { couponcode } = req.query;
     const userId = req.user._id;
+    console.log(userId)
     const cart = await Cart.aggregate([
       {
         $match: userId
