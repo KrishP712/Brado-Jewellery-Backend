@@ -73,8 +73,8 @@ const createCart = async (req, res) => {
 const getAllCart = async (req, res) => {
   try {
     const { couponcode } = req.query;
-    const userId = req.userId;
-    console.log(userId)
+    const userId = new mongoose.Types.ObjectId(req.userId);
+    console.log("USER ID:", userId);
     const cart = await Cart.aggregate([
       {
         $match: { userId: userId }
