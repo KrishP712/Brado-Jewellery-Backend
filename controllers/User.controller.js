@@ -11,7 +11,7 @@ const userLogin = async (req, res) => {
         const otpExpiry = Date.now() + 2 * 60 * 1000;
 
         let user = await User.findOne({ email });
-
+        
         // Existing user
         if (user) {
             await User.findByIdAndUpdate(user._id, { otp, otpExpired: otpExpiry });
