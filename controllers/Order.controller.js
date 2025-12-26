@@ -162,8 +162,8 @@ const placeOrderController = async (req, res) => {
         }
 
         // ✅ Shipping & final calculations
-        const shippingFee = 50;
-        const codCharge = paymentMethod === "COD" ? 25 : 0
+        const shippingFee = 70;
+        const codCharge = paymentMethod === "COD" ? 55 : 0
         const total_savings = Math.round(
             (total_product_discount + total_offer_discount + couponDiscount) * 100
         ) / 100;
