@@ -759,7 +759,7 @@ const updateOrder = async (req, res) => {
 
 const getOrderForAdmin = async(req, res) => {
     try {
-        const order = Order.find()
+        const order = await Order.find()
         res.status(200).json({ success: true, message: "Orders fetched successfully", order });
     } catch (error) {
         res.status(500).json({ success: false, message: error.message });
