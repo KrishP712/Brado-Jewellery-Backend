@@ -6,7 +6,7 @@ const { sendOtpEmail } = require("../utils/mailsender");
 const userLogin = async (req, res) => {
     try {
         const { email } = req.body;
-
+x
         const otp = Math.floor(100000 + Math.random() * 900000);
         const otpExpiry = Date.now() + 2 * 60 * 1000;
 
