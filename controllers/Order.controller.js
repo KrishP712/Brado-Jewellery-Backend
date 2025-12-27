@@ -757,7 +757,14 @@ const updateOrder = async (req, res) => {
 };
 
 
+const getOrderForAdmin = aysnc(req, res) => {
+    try {
+        const order = Order.find()
+        
+    } catch (error) {
 
+    }
+}
 module.exports = {
     placeOrderController, getOrders, getOrderByUser, updateOrder
 };

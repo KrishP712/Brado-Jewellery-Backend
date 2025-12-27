@@ -6,4 +6,5 @@ router.post("/placeorder", authUser, placeOrderController)
 router.post("/updateorder", updateOrder)
 router.get("/allorder", authUser, getOrders)
 router.get("/orderbyuser/:orderId", authUser, getOrderByUser)
+
 module.exports = router
