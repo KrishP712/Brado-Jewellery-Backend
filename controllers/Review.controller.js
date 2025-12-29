@@ -90,7 +90,7 @@ const getAllReview = async (req, res) => {
         const { page = 1, limit = 10 } = req.query;
 
         const reviews = await Review.find()
-            .populate("userId", "name email")
+            .populate("userId", "name email phone")
             .populate("productId", "name image price")
             .sort({ createdAt: -1 })
             .limit(limit * 1)
@@ -176,7 +176,7 @@ const getReviewsByProduct = async (req, res) => {
         }
 
         const reviews = await Review.find({ productId })
-            .populate("userId", "name avatar")
+            .populate("userId", "name email phone")
             .sort(sortOption)
             .limit(limit * 1)
             .skip((page - 1) * limit);
