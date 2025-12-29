@@ -244,6 +244,14 @@ const getAllProduct = async (req, res) => {
                     as: "imageDetails",
                 },
             },
+            {
+                $lookup: {
+                    from: "reviews", 
+                    localField: "_id",
+                    foreignField: "product",
+                    as: "reviews"
+                }
+            },
 
             // --- Final field formatting ---
             {
@@ -297,6 +305,28 @@ const getAllProduct = async (req, res) => {
                             "$price",
                         ],
                     },
+                    reviews: {
+                        $map: {
+                            input: "$reviews",
+                            as: "rev",
+                            in: {
+                                _id: "$$rev._id",
+                                rating: "$$rev.rating",
+                                comment: "$$rev.comment",
+                                user: "$$rev.user",     
+                                createdAt: "$$rev.createdAt",
+                                updatedAt: "$$rev.updatedAt",
+                            },
+                        },
+                    },
+                    averageRating: {
+                        $cond: [
+                            { $gt: [{ $size: "$reviews" }, 0] },
+                            { $round: [{ $avg: "$reviews.rating" }, 1] },
+                            0,
+                        ],
+                    },
+                    totalReviews: { $size: "$reviews" },
                 },
             },
 
@@ -733,8 +763,8 @@ const searchProducts = async (req, res) => {
         const products = await Product.find({
             title: { $regex: query, $options: "i" }
         })
-            .populate("image")      
-            .populate("category")     
+            .populate("image")
+            .populate("category")
             .limit(10);
         console.log(products);
         const finalProducts = products.map((p) => ({
