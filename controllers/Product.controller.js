@@ -253,14 +253,6 @@ const getAllProduct = async (req, res) => {
                 }
             },
             
-            {
-                $lookup: {
-                  from: "users",
-                  localField: "reviews.userId",
-                  foreignField: "_id",
-                  as: "reviewUsers"
-                }
-              },
             // --- Final field formatting ---
             {
                 $addFields: {
@@ -315,41 +307,18 @@ const getAllProduct = async (req, res) => {
                     },
                     reviews: {
                         $map: {
-                          input: "$reviews",
-                          as: "rev",
-                          in: {
-                            _id: "$$rev._id",
-                            rating: "$$rev.rating",
-                            comment: "$$rev.comment",
-                            createdAt: "$$rev.createdAt",
-                            updatedAt: "$$rev.updatedAt",
-                            user: {
-                              $let: {
-                                vars: {
-                                  matchedUser: {
-                                    $arrayElemAt: [
-                                      {
-                                        $filter: {
-                                          input: "$reviewUsers",
-                                          as: "u",
-                                          cond: { $eq: ["$$u._id", "$$rev.userId"] }
-                                        }
-                                      },
-                                      0
-                                    ]
-                                  }
-                                },
-                                in: {
-                                  _id: "$$matchedUser._id",
-                                  name: "$$matchedUser.name",
-                                  email: "$$matchedUser.email",
-                                  avatar: "$$matchedUser.avatar"
-                                }
-                              }
-                            }
-                          }
-                        }
-                      },
+                            input: "$reviews",
+                            as: "rev",
+                            in: {
+                                _id: "$$rev._id",
+                                rating: "$$rev.rating",
+                                comment: "$$rev.comment",
+                                user: "$$rev.user",
+                                createdAt: "$$rev.createdAt",
+                                updatedAt: "$$rev.updatedAt",
+                            },
+                        },
+                    },
                     averageRating: {
                         $cond: [
                             { $gt: [{ $size: "$reviews" }, 0] },
@@ -675,6 +644,14 @@ const getProductById = async (req, res) => {
                 }
             },
 
+            {
+                $lookup: {
+                  from: "users",
+                  localField: "reviews.userId",
+                  foreignField: "_id",
+                  as: "reviewUsers"
+                }
+              },
             // --- Final field formatting ---
             {
                 $addFields: {
@@ -729,18 +706,41 @@ const getProductById = async (req, res) => {
                     },
                     reviews: {
                         $map: {
-                            input: "$reviews",
-                            as: "rev",
-                            in: {
-                                _id: "$$rev._id",
-                                rating: "$$rev.rating",
-                                comment: "$$rev.comment",
-                                user: "$$rev.user",
-                                createdAt: "$$rev.createdAt",
-                                updatedAt: "$$rev.updatedAt"
+                          input: "$reviews",
+                          as: "rev",
+                          in: {
+                            _id: "$$rev._id",
+                            rating: "$$rev.rating",
+                            comment: "$$rev.comment",
+                            createdAt: "$$rev.createdAt",
+                            updatedAt: "$$rev.updatedAt",
+                            user: {
+                              $let: {
+                                vars: {
+                                  matchedUser: {
+                                    $arrayElemAt: [
+                                      {
+                                        $filter: {
+                                          input: "$reviewUsers",
+                                          as: "u",
+                                          cond: { $eq: ["$$u._id", "$$rev.userId"] }
+                                        }
+                                      },
+                                      0
+                                    ]
+                                  }
+                                },
+                                in: {
+                                  _id: "$$matchedUser._id",
+                                  name: "$$matchedUser.name",
+                                  email: "$$matchedUser.email",
+                                  avatar: "$$matchedUser.avatar"
+                                }
+                              }
                             }
+                          }
                         }
-                    },
+                      },
                     averageRating: {
                         $cond: [
                             { $gt: [{ $size: "$reviews" }, 0] },
