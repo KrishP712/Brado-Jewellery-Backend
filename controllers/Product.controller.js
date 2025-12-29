@@ -248,7 +248,7 @@ const getAllProduct = async (req, res) => {
                 $lookup: {
                     from: "reviews", 
                     localField: "_id",
-                    foreignField: "product",
+                    foreignField: "productId",
                     as: "reviews"
                 }
             },
