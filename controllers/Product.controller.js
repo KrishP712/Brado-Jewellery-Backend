@@ -763,7 +763,6 @@ const getProductById = async (req, res) => {
                 },
             }
         ])
-        console.log(product);
         if (!product) {
             return res.status(404).json({ success: false, error: "Product not found" });
         }
