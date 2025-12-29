@@ -246,7 +246,7 @@ const getAllProduct = async (req, res) => {
             },
             {
                 $lookup: {
-                    from: "reviews", 
+                    from: "reviews",
                     localField: "_id",
                     foreignField: "productId",
                     as: "reviews"
@@ -313,7 +313,7 @@ const getAllProduct = async (req, res) => {
                                 _id: "$$rev._id",
                                 rating: "$$rev.rating",
                                 comment: "$$rev.comment",
-                                user: "$$rev.user",     
+                                user: "$$rev.user",
                                 createdAt: "$$rev.createdAt",
                                 updatedAt: "$$rev.updatedAt",
                             },
@@ -634,6 +634,16 @@ const getProductById = async (req, res) => {
                 },
             },
 
+            // --- Review lookup ---
+            {
+                $lookup: {
+                    from: "reviews",
+                    localField: "_id",
+                    foreignField: "productId",
+                    as: "reviews"
+                }
+            },
+
             // --- Final field formatting ---
             {
                 $addFields: {
@@ -686,6 +696,28 @@ const getProductById = async (req, res) => {
                             "$price",
                         ],
                     },
+                    reviews: {
+                        $map: {
+                            input: "$reviews",
+                            as: "rev",
+                            in: {
+                                _id: "$$rev._id",
+                                rating: "$$rev.rating",
+                                comment: "$$rev.comment",
+                                user: "$$rev.user",
+                                createdAt: "$$rev.createdAt",
+                                updatedAt: "$$rev.updatedAt"
+                            }
+                        }
+                    },
+                    averageRating: {
+                        $cond: [
+                            { $gt: [{ $size: "$reviews" }, 0] },
+                            { $round: [{ $avg: "$reviews.rating" }, 1] },
+                            0
+                        ]
+                    },
+                    totalReviews: { $size: "$reviews" }
                 },
             },
 
