@@ -20,8 +20,8 @@ async function sendOtpEmail(email, otp) {
 
     const emailData = new Brevo.SendSmtpEmail();
 
-    emailData.subject = "Your OTP - Brad Jewellery";
-    emailData.sender = { name: "Brad Jewellery", email: "padariyakrish800@gmail.com" };
+    emailData.subject = "Your OTP - Brado Jewellery";
+    emailData.sender = { name: "Brado Jewellery", email: "padariyakrish800@gmail.com" };
     emailData.to = [{ email }];
     emailData.htmlContent = htmlContent;
 
