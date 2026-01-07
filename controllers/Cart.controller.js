@@ -328,17 +328,15 @@ const getAllCart = async (req, res) => {
       });
       console.log("Coupon found:", coupon);
       if (!coupon) {
-        return res.status(200).json({
+        return res.status(400).json({
           success: false,
-          message: "Invalid coupon code",
-          data: cart,
-          coupon: null
+          message: "Invalid coupon code"
         });
       }
 
       const now = new Date();
       if (now < coupon.startdate || now > coupon.enddate) {
-        return res.status(200).json({
+        return res.status(400).json({
           success: false,
           message: "Coupon expired or not yet active",
           data: cart,
@@ -347,20 +345,16 @@ const getAllCart = async (req, res) => {
       }
 
       if (coupon.usageLimit <= 0) {
-        return res.status(200).json({
+        return res.status(400).json({
           success: false,
-          message: "Coupon usage limit reached",
-          data: cart,
-          coupon: null
+          message: "Coupon usage limit reached"
         });
       }
 
       if (cart[0].total_amount < coupon.minorderamount) {
-        return res.status(200).json({
+        return res.status(400).json({
           success: false,
           message: `Minimum order amount should be ₹${coupon.minorderamount} to use this coupon`,
-          data: cart,
-          coupon: null
         });
       }
 
